@@ -83,3 +83,75 @@ Explanation:
 =================================================
 
 """
+
+
+class BankAccount:
+
+    def __init__(self, name, account_number, balance = 0):
+
+        self.acc_name = name
+        self.acc_number = account_number
+
+        if balance < 0:
+            print("Balance can not be negative.")
+            self.acc_balance = 0
+        else:
+            self.acc_balance = balance
+
+    def deposit(self, amount):
+
+        if amount < 0:
+            print("Deposite amount can not be negative.")
+        else:
+            self.acc_balance += amount
+
+    def withdraw(self, amount):
+
+        if amount < 0:
+            print("Withdraw amount can not be negative.")
+        elif amount > self.acc_balance:
+            print("Not enough balance.")
+        else:
+            self.acc_balance -= amount
+    
+    def get_balance(self):
+
+        return self.acc_balance
+    
+    def __str__(self):
+
+        return f"Account{self.acc_number} - {self.acc_name}: ${self.acc_balance}"
+    
+
+n = int(input("Enter the number of accounts: "))
+
+account_records = []
+
+for i in range(n):
+    name = input("Enter your name: ")
+    account_number = int(input("Enter your account number: "))
+    balance = int(input("Enter the balance in $: "))
+
+    account_records.append({
+        "name": name,
+        "account_number": account_number,
+        "balance": balance,
+    })
+
+accounts = []
+
+for i in account_records:
+    accounts.append(BankAccount(**i))
+
+for acc in accounts:
+    print(f"Processing for account name: {acc.acc_name}")
+
+    dep_amount = int(input("Enter the deposite amount in $: "))
+    acc.deposit(dep_amount)
+
+    withdraw_amount = int(input("Enter withdrawal amount in $: "))
+    acc.withdraw(withdraw_amount)
+
+print("Final Account Details: ")
+for acc in accounts:
+    print(acc)
